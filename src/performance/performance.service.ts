@@ -28,6 +28,14 @@ export class PerformanceService {
   }
 
   /**
+   * 공연전시 상세 조회
+   */
+  find(id: number): Promise<Performance> {
+    this.logger.log('performance 상세 조회');
+    return this.performanceRepository.findOne(id);
+  }
+
+  /**
    * 공연전시 저장
    */
   async saveAll(): Promise<void> {

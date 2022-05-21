@@ -1,7 +1,7 @@
-import { Controller, Get, Post } from "@nestjs/common";
+import { Controller, Get, Param, Post } from "@nestjs/common";
 import { PerformanceService } from "./performance.service";
 import { Performance } from "./performance.entity";
-import { ApiOperation } from "@nestjs/swagger";
+import { ApiOperation, ApiParam } from "@nestjs/swagger";
 
 @Controller('performance')
 export class PerformanceController {
@@ -17,6 +17,22 @@ export class PerformanceController {
     const performances = await this.performanceService.findAll();
     return Object.assign({
       data: performances,
+      statusCode: 200,
+      statusMsg: `성공`,
+    });
+  }
+
+  @ApiParam({
+    name: 'performanceId',
+    required: true,
+    description: '조회할 공연 아이디'
+  })
+  @ApiOperation({summary: '공연/전시 데이터 상세 조회'})
+  @Get('/:performanceId')
+  async find(@Param('performanceId') id: number): Promise<any> {
+    const performance = await this.performanceService.find(id);
+    return Object.assign({
+      data: performance,
       statusCode: 200,
       statusMsg: `성공`,
     });
