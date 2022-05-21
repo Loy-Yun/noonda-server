@@ -39,10 +39,8 @@ export class HttpExceptionFilter implements ExceptionFilter {
 
     /* 클라에 전달 */
     response.status(status).json({
-      error: {
-        code: status,
-        message: res?.message ?? exception.message
-      }
+      statusCode: status,
+      statusMsg: res?.message ?? exception.message
     });
   }
 }
