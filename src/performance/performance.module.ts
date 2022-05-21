@@ -1,11 +1,14 @@
-import { Module } from '@nestjs/common';
+import { HttpModule, Module } from "@nestjs/common";
 import { PerformanceController } from './performance.controller';
 import { PerformanceService } from './performance.service';
 import { Performance } from "./performance.entity";
 import { TypeOrmModule } from "@nestjs/typeorm";
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Performance])],
+  imports: [
+    TypeOrmModule.forFeature([Performance]),
+    HttpModule
+  ],
   controllers: [PerformanceController],
   providers: [PerformanceService]
 })
