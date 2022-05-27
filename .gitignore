@@ -36,3 +36,4 @@ lerna-debug.log*
 /ormconfig.json
 /config/
 /src/assets/data/
+/.serverless/
