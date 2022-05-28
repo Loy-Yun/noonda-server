@@ -1,7 +1,9 @@
-import { Entity, Column, PrimaryGeneratedColumn, PrimaryColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, PrimaryColumn, OneToMany, RelationId } from "typeorm";
+import { Wish } from "../wish/wish.entity";
 
 @Entity({ synchronize: false })
 export class Performance {
+
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -40,4 +42,10 @@ export class Performance {
 
   @Column()
   gps_y: number;
+
+  @Column({default: 0})
+  views: number;
+
+  @RelationId((wish: Wish) => wish.performance)
+  wishes: number[];
 }

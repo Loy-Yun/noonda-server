@@ -6,6 +6,7 @@ import { UserModule } from './user/user.module';
 import { PerformanceModule } from './performance/performance.module';
 import { ReviewModule } from './review/review.module';
 import { ArchiveModule } from './archive/archive.module';
+import { WishModule } from './wish/wish.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { ArchiveModule } from './archive/archive.module';
     PerformanceModule,
     ReviewModule,
     ArchiveModule,
+    WishModule,
   ],
   controllers: [],
   providers: [],
