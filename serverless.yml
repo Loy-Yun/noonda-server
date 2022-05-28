@@ -1,7 +1,9 @@
 service: noonda-api
 
-custom: # env file
-  setting: ${file(config/setting.json)}
+custom:
+  setting: ${file(config/setting.json)} # env file
+  optimize:
+    external: [ 'swagger-ui-dist' ]
 
 plugins:
   - serverless-offline
@@ -9,11 +11,10 @@ plugins:
 provider:
   name: aws
   runtime: nodejs14.x
-  stage: dev
   region: ap-northeast-2
   timeout: 20
   environment:
-    NODE_ENV: ${self:custom.setting.DEV_NODE_ENV}
+    NODE_ENV: ${opt:stage, 'dev'}
 
 functions:
   app:
