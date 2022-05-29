@@ -1,5 +1,6 @@
-import { Entity, Column, PrimaryGeneratedColumn, PrimaryColumn, OneToMany, RelationId } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, PrimaryColumn, OneToMany, RelationId, ManyToOne } from "typeorm";
 import { Wish } from "../wish/wish.entity";
+import { ApiProperty } from "@nestjs/swagger";
 
 @Entity({ synchronize: false })
 export class Performance {
@@ -46,6 +47,44 @@ export class Performance {
   @Column({default: 0})
   views: number;
 
-  @RelationId((wish: Wish) => wish.performance)
+  @OneToMany(type => Wish, wish => wish.performance)
   wishes: number[];
+}
+
+export class PerformanceDTO {
+  @ApiProperty()
+  id: number;
+
+  @ApiProperty()
+  title: string;
+
+  @ApiProperty()
+  start_date: Date;
+
+  @ApiProperty()
+  end_date: Date;
+
+  @ApiProperty()
+  place: string;
+
+  @ApiProperty()
+  category: string;
+
+  @ApiProperty()
+  area: string;
+
+  @ApiProperty()
+  thumbnail: string;
+
+  @ApiProperty()
+  price: string;
+
+  @ApiProperty()
+  link: string;
+
+  @ApiProperty()
+  views: number;
+
+  @ApiProperty()
+  wishes: number;
 }
