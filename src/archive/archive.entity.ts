@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn } from "typeorm";
 
-@Entity({ synchronize: false })
+@Entity({ synchronize: true })
 export class Archive {
 
   @PrimaryGeneratedColumn()

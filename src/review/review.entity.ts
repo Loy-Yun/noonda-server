@@ -1,6 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
-@Entity({ synchronize: false })
+@Entity({ synchronize: true })
 export class Review {
 
   @PrimaryGeneratedColumn()
@@ -21,9 +21,11 @@ export class Review {
   @Column()
   content: string;
 
-  @Column()
+  /*
+  @OneToMany()
   imgs: string[];
 
-  @Column()
+  @OneToMany()
   keywords: string[];
+  */
 }
