@@ -1,9 +1,6 @@
 import { Controller, Get, Param, Post } from "@nestjs/common";
 import { PerformanceService } from "./performance.service";
-import { Performance, PerformanceDTO } from "./performance.entity";
 import {
-  ApiExcludeEndpoint,
-  ApiFoundResponse,
   ApiOkResponse,
   ApiOperation,
   ApiParam,
@@ -43,28 +40,6 @@ export class PerformanceController {
     const performance = await this.performanceService.find(id);
     return Object.assign({
       data: performance,
-      statusCode: 200,
-      statusMsg: `성공`,
-    });
-  }
-
-  @ApiExcludeEndpoint()
-  @ApiOperation({summary: '공연/전시 데이터 밀어넣기'})
-  @Post('')
-  async saveAll(): Promise<any> {
-    await this.performanceService.saveAll();
-    return Object.assign({
-      statusCode: 200,
-      statusMsg: `성공`,
-    });
-  }
-
-  @ApiExcludeEndpoint()
-  @ApiOperation({summary: '공연/전시 상세 데이터 추가하기'})
-  @Post('details')
-  async saveDetails(): Promise<any> {
-    await this.performanceService.saveDetails();
-    return Object.assign({
       statusCode: 200,
       statusMsg: `성공`,
     });
