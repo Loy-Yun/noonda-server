@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import {Module, ValidationPipe} from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { getConnectionOptions } from 'typeorm';
 import { ConfigModule } from '@nestjs/config';
@@ -8,6 +8,7 @@ import { ReviewModule } from './review/review.module';
 import { ArchiveModule } from './archive/archive.module';
 import { WishModule } from './wish/wish.module';
 import { ImageModule } from './image/image.module';
+import {APP_PIPE} from "@nestjs/core";
 
 @Module({
   imports: [
@@ -34,6 +35,11 @@ import { ImageModule } from './image/image.module';
     ImageModule,
   ],
   controllers: [],
-  providers: [],
+  providers: [
+    {
+      provide: APP_PIPE,
+      useClass: ValidationPipe,
+    },
+  ],
 })
 export class AppModule {}
