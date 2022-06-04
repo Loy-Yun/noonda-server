@@ -19,7 +19,7 @@ export class PaginationDto {
     maximum: 100,
     default: 10,
   })
-  @ApiProperty({ description: '페이지 당 개수' })
+  @ApiProperty({ description: '페이지 당 개수(2~100)' })
   private readonly limit: number = 10;
 
   getPageNum(): number {
