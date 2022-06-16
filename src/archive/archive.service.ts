@@ -15,10 +15,18 @@ export class ArchiveService {
   }
 
   /**
-   * 공연전시 리스트 조회
+   * 아카이브 리스트 조회
    */
-  async findAll(): Promise<Archive[]> {
+  async findAll(userId: number): Promise<Archive[]> {
     this.logger.log('archive 데이터 전체 조회');
     return this.archiveRepository.find({});
+  }
+
+  /**
+   * 아카이브 저장
+   */
+  async save(archive): Promise<void> {
+    this.logger.log('archive 데이터 전체 조회');
+    await this.archiveRepository.save(archive);
   }
 }
