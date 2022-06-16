@@ -9,7 +9,6 @@ export class UserService {
 
   constructor(
     @InjectRepository(User) private userRepository: Repository<User>,
-    @Inject('CLAYFUL_INIT') private readonly Clayful,
   ) {
     this.logger = new Logger();
   }
