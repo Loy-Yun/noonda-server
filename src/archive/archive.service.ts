@@ -19,14 +19,14 @@ export class ArchiveService {
    */
   async findAll(userId: number): Promise<Archive[]> {
     this.logger.log('archive 데이터 전체 조회');
-    return this.archiveRepository.find({});
+    return this.archiveRepository.find();
   }
 
   /**
    * 아카이브 저장
    */
   async save(archive): Promise<void> {
-    this.logger.log('archive 데이터 전체 조회');
+    this.logger.log('archive 저장');
     await this.archiveRepository.save(archive);
   }
 }

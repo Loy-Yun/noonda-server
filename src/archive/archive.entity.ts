@@ -1,4 +1,12 @@
-import {Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn} from "typeorm";
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn
+} from "typeorm";
 import {ArchiveImage} from "../image/entity/archiveImage.entity";
 import {User} from "../user/user.entity";
 import {ApiProperty} from "@nestjs/swagger";
@@ -21,11 +29,20 @@ export class Archive {
   @Column()
   cover: string;
 
-  @OneToMany(() => ArchiveImage, (images) => images.archive, { nullable: true })
+  @Column()
+  date: Date;
+
+  @OneToMany(() => ArchiveImage, (images) => images.archive, { nullable: true, cascade: ['insert', 'update'] })
   images: ArchiveImage[];
 
   @ManyToOne(() => User, (user) => user.archive)
   user: User
+
+  @CreateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP(6)" })
+  created_at: Date;
+
+  @UpdateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP(6)", onUpdate: "CURRENT_TIMESTAMP(6)" })
+  updated_at: Date;
 }
 
 export class ArchiveSaveRequestDTO {
@@ -42,6 +59,8 @@ export class ArchiveSaveRequestDTO {
   cover: string;
 
   @ApiProperty()
-  images: string[];
+  date: Date;
 
+  @ApiProperty()
+  images: string[];
 }

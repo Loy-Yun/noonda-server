@@ -29,8 +29,8 @@ export class ArchiveController {
     });
   }
 
-  @ApiOperation({summary: '유저 아카이브 저장'})
-  @ApiOkResponse({ type: ResponseDto, description: '아카이브 리스트' })
+  @ApiOperation({summary: '아카이브 저장'})
+  @ApiOkResponse({ type: ResponseDto, description: '아카이브 생성 성공' })
   @Post('')
   async saveOne(
     @Body() archive: ArchiveSaveRequestDTO
@@ -41,5 +41,4 @@ export class ArchiveController {
       statusMsg: `성공`
     });
   }
-
 }
