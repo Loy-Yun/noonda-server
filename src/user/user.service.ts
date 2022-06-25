@@ -11,6 +11,7 @@ export class UserService {
     @InjectRepository(User) private userRepository: Repository<User>,
   ) {
     this.logger = new Logger();
+    this.userRepository = userRepository;
   }
 
   // TODO: jwt token 으로 변경하기
