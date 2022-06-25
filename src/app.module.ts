@@ -9,7 +9,8 @@ import { ArchiveModule } from './archive/archive.module';
 import { WishModule } from './wish/wish.module';
 import { ImageModule } from './image/image.module';
 import { APP_GUARD } from "@nestjs/core";
-import { AuthGuard } from "./util/auth.guard";
+import { AuthGuard } from "./auth/auth.guard";
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -34,13 +35,14 @@ import { AuthGuard } from "./util/auth.guard";
     ArchiveModule,
     WishModule,
     ImageModule,
+    AuthModule,
   ],
   controllers: [],
   providers: [
-    {
-      provide: APP_GUARD,
-      useClass: AuthGuard,
-    },
+    // {
+    //   provide: APP_GUARD,
+    //   useClass: AuthGuard,
+    // },
   ],
 })
 export class AppModule {}
