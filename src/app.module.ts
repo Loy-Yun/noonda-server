@@ -8,7 +8,10 @@ import { ReviewModule } from './review/review.module';
 import { ArchiveModule } from './archive/archive.module';
 import { WishModule } from './wish/wish.module';
 import { ImageModule } from './image/image.module';
-import {APP_PIPE} from "@nestjs/core";
+import { APP_PIPE } from "@nestjs/core";
+import { APP_GUARD } from "@nestjs/core";
+import { AuthGuard } from "./auth/auth.guard";
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -33,6 +36,7 @@ import {APP_PIPE} from "@nestjs/core";
     ArchiveModule,
     WishModule,
     ImageModule,
+    AuthModule,
   ],
   controllers: [],
   providers: [
@@ -40,6 +44,10 @@ import {APP_PIPE} from "@nestjs/core";
       provide: APP_PIPE,
       useClass: ValidationPipe,
     },
+    // {
+    //   provide: APP_GUARD,
+    //   useClass: AuthGuard,
+    // },
   ],
 })
 export class AppModule {}
