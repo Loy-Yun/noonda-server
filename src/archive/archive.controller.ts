@@ -29,7 +29,7 @@ export class ArchiveController {
     });
   }
 
-  @ApiOperation({summary: '아카이브 저장'})
+  @ApiOperation({summary: '아카이브 저장 (개발중)'})
   @ApiOkResponse({ type: ResponseDto, description: '아카이브 생성 성공' })
   @Post('')
   async saveOne(
