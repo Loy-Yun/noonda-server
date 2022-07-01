@@ -9,7 +9,7 @@ import {
 import { ResponseDto, ResponseListDto } from "../global/DTO/response.dto";
 import { PaginationDto } from "../global/DTO/pagination.dto";
 
-@ApiTags('공연/전시')
+@ApiTags('공연/전시 🍿')
 @Controller('performance')
 export class PerformanceController {
   logger: Logger;
@@ -21,7 +21,7 @@ export class PerformanceController {
     this.performanceService = performanceService;
   }
 
-  @ApiOperation({summary: '공연/전시 데이터 전체 조회'})
+  @ApiOperation({summary: '공연/전시 데이터 전체 조회 (아이디 참고 용)'})
   @ApiOkResponse({ type: ResponseListDto, description: '공연/전시 리스트' })
   @Get('')
   async findAll(
