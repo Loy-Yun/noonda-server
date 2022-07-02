@@ -78,9 +78,10 @@ export class PerformanceService {
    */
   async findFilteredList(category: string[], area: string[]): Promise<Performance[]> {
     this.logger.log('필터링 된 performance 조회');
+    const query = (category?.length > 0 && area?.length > 0) ? "area IN (:area) AND category IN (:category)" : "area IN (:area) OR category IN (:category)"
     return this.performanceRepository
       .createQueryBuilder('performance')
-      .where("area IN (:area) AND category IN (:category)", { area: area, category: category })
+      .where(query, { area: area?.length > 0 ? area : null, category: category?.length > 0 ? category : null })
       .getRawMany();
   }
 
