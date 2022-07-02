@@ -16,7 +16,8 @@ export class ArchiveController {
     this.archiveService = archiveService;
   }
 
-  @ApiOperation({summary: '유저 아카이브 전체 조회'})
+  @ApiOperation({summary: '유저별 아카이브 전체 조회', description: '현재는 지정된 유저로 불러옵니다. 추후 jwt token 받기!!' +
+      '\n\nTODO: 이모티콘 저장 가능하게 하기..'})
   @ApiOkResponse({ type: ResponseListDto, description: '아카이브 리스트' })
   @Get('')
   async findAll(): Promise<any> {
@@ -29,7 +30,7 @@ export class ArchiveController {
     });
   }
 
-  @ApiOperation({summary: '아카이브 저장 (개발중)'})
+  @ApiOperation({summary: '아카이브 저장', description: '현재는 지정된 유저로 저장됩니다. 추후 jwt token 받기!!'})
   @ApiOkResponse({ type: ResponseDto, description: '아카이브 생성 성공' })
   @Post('')
   async saveOne(

@@ -21,6 +21,9 @@ export class Archive {
   title: string;
 
   @Column()
+  performance_name: string;
+
+  @Column()
   content: string;
 
   @Column()
@@ -46,21 +49,24 @@ export class Archive {
 }
 
 export class ArchiveSaveRequestDTO {
-  @ApiProperty()
+  @ApiProperty({description: '아카이브 제목', example: '내 아카이브를 받아라'})
   title: string;
 
-  @ApiProperty()
-  content: string;
+  @ApiProperty({description: '공연 이름', example: '눈물의 똥꼬쇼'})
+  performance_name: string;
 
-  @ApiProperty()
-  category: string;
-
-  @ApiProperty()
-  cover: string;
-
-  @ApiProperty()
+  @ApiProperty({description: '공연 관람일', example: '2022-06-04'})
   date: Date;
 
-  @ApiProperty()
+  @ApiProperty({description: '아카이브 내용', example: '즐거웠다. 다음에 또 만나자'})
+  content: string;
+
+  @ApiProperty({description: '아카이브 카테고리', example: '전시'})
+  category: string;
+
+  @ApiProperty({description: '커버 이미지', example: 'www.sdfkmsflkvm'})
+  cover: string;
+
+  @ApiProperty({description: '아카이브 이미지 목록', example: ['www.spiofvos', 'www.sdfkmsflkvm']})
   images: string[];
 }
