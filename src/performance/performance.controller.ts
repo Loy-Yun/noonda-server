@@ -1,4 +1,4 @@
-import {Body, Controller, Get, Logger, Param, Post, Query} from "@nestjs/common";
+import {Body, Controller, Get, HttpException, HttpStatus, Logger, Param, Post, Query} from "@nestjs/common";
 import { PerformanceService } from "./performance.service";
 import {
   ApiBody,
@@ -23,7 +23,7 @@ export class PerformanceController {
     this.performanceService = performanceService;
   }
 
-  @ApiOperation({summary: '공연/전시 데이터 전체 조회 (아이디 참고 용)'})
+  @ApiOperation({summary: '공연/전시 데이터 전체 조회 (개발용 x, 아이디 참고 용)'})
   @ApiOkResponse({ type: ResponseListDto, description: '공연/전시 리스트' })
   @Get('')
   async findAll(
@@ -60,14 +60,28 @@ export class PerformanceController {
   @ApiParam({
     name: 'collectionName',
     required: true,
-    description: '조회할 공연 컬렉션 이름',
-    example: 'test'
+    description: '조회할 공연 컬렉션 이름 \n\n 가장 많이 찾는: popular / 새롭게 나온: new / (장르 관련 컬랙션 전부)추천장르+즐길만한+이런~어때요: genre',
+    example: 'genre'
   })
-  @ApiOperation({summary: '공연/전시 큐레이션 데이터 조회 (개발중)', description: '아직 작업중!! 우선은 collectionName 아무거나 넣어도 공연 5개 나오게 되어있습니다'})
+  @ApiOperation({summary: '공연/전시 큐레이션 데이터 조회', description: '가장 많이 찾는: popular / 새롭게 나온: new / (장르 관련 컬랙션 전부)추천장르+즐길만한+이런~어때요: genre'})
   @ApiOkResponse({ type: ResponseListDto, description: '공연/전시 큐레이션 데이터 리스트' })
   @Get('/collection/:collectionName')
   async findCollection(@Param('collectionName') collection: string): Promise<any> {
-    const performances = await this.performanceService.findCollection(collection, 1);
+    let performances = {}
+    if(collection === 'new' || collection === 'popular') {
+      performances = await this.performanceService.findPerformanceCollection(collection, 1);
+    } else if(collection === 'genre') {
+      performances = await this.performanceService.findGenreCollection(collection, 1);
+    } else {
+      throw new HttpException(
+        {
+          code: HttpStatus.BAD_REQUEST,
+          message: '잘못된 collection name 입니다.'
+        },
+        HttpStatus.BAD_REQUEST
+      );
+    }
+
     return Object.assign({
       statusCode: 200,
       statusMsg: `성공`,

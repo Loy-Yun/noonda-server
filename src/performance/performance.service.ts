@@ -1,8 +1,9 @@
-import {Injectable, Logger} from "@nestjs/common";
+import {HttpException, HttpStatus, Injectable, Logger} from "@nestjs/common";
 import {Performance} from "./performance.entity";
 import {InjectRepository} from "@nestjs/typeorm";
 import {Like, Repository} from "typeorm";
 import {PaginationDto} from "../global/DTO/pagination.dto";
+import any = jasmine.any;
 
 @Injectable()
 export class PerformanceService {
@@ -68,7 +69,7 @@ export class PerformanceService {
   /**
    * 공연전시 컬렉션 조회
    */
-  async findCollection(collection: string, userId: number): Promise<Performance[]> {
+  async findPerformanceCollection(collection: string, userId: number): Promise<Performance[]> {
     this.logger.log('performance 컬렉션 조회');
     let query = "";
     switch (collection) {
@@ -79,12 +80,47 @@ export class PerformanceService {
       case 'new':
         query = "performance.id";
         break;
+
+      default:
+        throw new HttpException(
+          {
+            code: HttpStatus.BAD_REQUEST,
+            message: '잘못된 collection name 입니다.'
+          },
+          HttpStatus.BAD_REQUEST
+        );
     }
     return this.performanceRepository
       .createQueryBuilder('performance')
       .orderBy(query, 'DESC')
       .limit(10)
       .getMany();
+  }
+
+  /**
+   * 공연전시 장르 컬렉션 조회
+   */
+  async findGenreCollection(collection: string, userId: number): Promise<any[]> {
+    this.logger.log('performance 장르 컬렉션 조회');
+    let result = [];
+    result = await this.performanceRepository
+      .createQueryBuilder('performance')
+      .select('performance.category')
+      .orderBy('RAND()')
+      .groupBy('performance.category')
+      .limit(4)
+      .getMany();
+    result = await Promise.all(result.map(async (r, index) => {
+      if (index > 1) {
+        r.performance = await this.performanceRepository
+          .createQueryBuilder('performance')
+          .where('category = (:category)', { category: r.category })
+          .limit(10)
+          .getMany();
+      }
+      return r;
+    }));
+    return result;
   }
 
   /**
