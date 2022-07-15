@@ -12,6 +12,7 @@ import { APP_PIPE } from "@nestjs/core";
 import { APP_GUARD } from "@nestjs/core";
 import { AuthGuard } from "./auth/auth.guard";
 import { AuthModule } from './auth/auth.module';
+import { CollectionModule } from './collection/collection.module';
 
 @Module({
   imports: [
@@ -37,6 +38,7 @@ import { AuthModule } from './auth/auth.module';
     WishModule,
     ImageModule,
     AuthModule,
+    CollectionModule,
   ],
   controllers: [],
   providers: [
