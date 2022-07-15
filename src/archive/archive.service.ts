@@ -40,6 +40,7 @@ export class ArchiveService {
       image.url = i;
       return image;
     });
-    await this.archiveRepository.save(archive);
+    const saved = await this.archiveRepository.save(archive);
+    await this.archiveRepository.update(saved.id, {cover: saved.images[archive.cover].id});
   }
 }

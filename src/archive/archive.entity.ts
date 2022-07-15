@@ -30,7 +30,7 @@ export class Archive {
   category: string;
 
   @Column()
-  cover: string;
+  cover: number;
 
   @Column()
   date: Date;
@@ -64,8 +64,8 @@ export class ArchiveSaveRequestDTO {
   @ApiProperty({description: '아카이브 카테고리', example: '전시'})
   category: string;
 
-  @ApiProperty({description: '커버 이미지', example: 'www.sdfkmsflkvm'})
-  cover: string;
+  @ApiProperty({description: '커버 이미지 인덱스(0부터)', example: 0})
+  cover: number;
 
   @ApiProperty({description: '아카이브 이미지 목록', example: ['www.spiofvos', 'www.sdfkmsflkvm']})
   images: string[];
