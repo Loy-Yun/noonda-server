@@ -60,7 +60,9 @@ export class PerformanceService {
    */
   async find(id: number): Promise<Performance> {
     this.logger.log('performance 상세 조회');
-    return this.performanceRepository.findOne(id);
+    return await this.performanceRepository.update(id, {
+      views: () => 'views + 1',
+    }).then(res => res.raw[0]);
   }
 
   /**
@@ -68,9 +70,21 @@ export class PerformanceService {
    */
   async findCollection(collection: string, userId: number): Promise<Performance[]> {
     this.logger.log('performance 컬렉션 조회');
-    return this.performanceRepository.find({
-      take: 5
-    });
+    let query = "";
+    switch (collection) {
+      case 'popular':
+        query = "performance.views";
+        break;
+
+      case 'new':
+        query = "performance.id";
+        break;
+    }
+    return this.performanceRepository
+      .createQueryBuilder('performance')
+      .orderBy(query, 'DESC')
+      .limit(10)
+      .getMany();
   }
 
   /**
@@ -82,7 +96,7 @@ export class PerformanceService {
     return this.performanceRepository
       .createQueryBuilder('performance')
       .where(query, { area: area?.length > 0 ? area : null, category: category?.length > 0 ? category : null })
-      .getRawMany();
+      .getMany();
   }
 
   /**

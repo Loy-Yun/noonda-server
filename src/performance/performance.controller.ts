@@ -92,7 +92,7 @@ export class PerformanceController {
     required: true,
     description: '필터걸 항목 request body'
   })
-  @ApiOperation({summary: '필터링된 공연/전시 데이터 조회', description: '필터로 걸 수 있는 카테고리/지역은 /filter api로 확인해주세요 (**칼럼명 앞에 performance_ 는 삭제할 예정입니다.)' +
+  @ApiOperation({summary: '필터링된 공연/전시 데이터 조회', description: '필터로 걸 수 있는 카테고리/지역은 /filter api로 확인해주세요 ' +
       '\n\n카테고리/지역 중 하나만 거는 경우 없는 애는 빈배열 or 아예 안넘겨줘도 상관 없습니다.'})
   @ApiOkResponse({ type: ResponseListDto, description: '필터링된 공연/전시 데이터 리스트' })
   @Post('/filter')
