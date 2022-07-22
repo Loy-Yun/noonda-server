@@ -25,8 +25,9 @@ export class ArchiveService {
     this.logger.log('archive 데이터 전체 조회');
     return this.archiveRepository
       .createQueryBuilder('archive')
+      .leftJoinAndSelect('archive.images', 'images')
       .where('archive.user = :user', { user: userId })
-      .getRawMany();
+      .getMany();
   }
 
   /**
@@ -42,5 +43,19 @@ export class ArchiveService {
     });
     const saved = await this.archiveRepository.save(archive);
     await this.archiveRepository.update(saved.id, {cover: saved.images[archive.cover].id});
+  }
+
+  /**
+   * 아카이브 수정
+   */
+  async edit(id, request): Promise<Archive> {
+    this.logger.log('archive 수정');
+    let payload = request;
+    const archive = await this.archiveRepository.findOne(id);
+    if(payload.cover > -1) {
+      payload.cover = archive.images[payload.cover].id;
+    }
+
+    return await this.archiveRepository.update(id, payload).then(response => response.raw[0]);
   }
 }
